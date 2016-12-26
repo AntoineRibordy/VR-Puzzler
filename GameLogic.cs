@@ -48,3 +48,4 @@ public class GameLogic : MonoBehaviour { public GameObject player; public GameOb
 		restartUI.SetActive (!restartUI.activeSelf);
 	}
 }
+
