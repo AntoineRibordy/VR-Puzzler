@@ -1,8 +1,12 @@
+using UnityEngine; using System.Collections;
+
+public class GameLogic : MonoBehaviour {
 public GameObject player;
 public GameObject eventSystem;
 public GameObject startUI, restartUI;
 public GameObject startPoint, playPoint, restartPoint;
 public GameObject[] puzzleSpheres; //An array to hold our puzzle spheres
+public GameObject failAudioHolder;
 
 public int puzzleLength = 5; //How many times we light up.  This is the difficulty factor.  The longer it is the more you have to memorize in-game.
 public float puzzleSpeed = 1f; //How many seconds between puzzle display pulses
@@ -74,7 +78,8 @@ void displayPattern() { //Invoked repeating.
 	if (currentlyDisplayingPattern == true) { //If we are not finished displaying the pattern
 		if (currentDisplayIndex < puzzleOrder.Length) { //If we haven't reached the end of the puzzle
 			Debug.Log (puzzleOrder[currentDisplayIndex] + " at index: " + currentDisplayIndex); 
-			puzzleSpheres [puzzleOrder [currentDisplayIndex]].GetComponent<lightUp> ().patternLightUp (puzzleSpeed); //Light up the sphere at the proper index.  For now we keep it lit up the same amount of time as our interval, but could adjust this to be less.
+			puzzleSpheres [puzzleOrder [currentDisplayIndex]].GetComponent<lightUp>().patternLightUp (puzzleSpeed);
+			//Light up the sphere at the proper index.  For now we keep it lit up the same amount of time as our interval, but could adjust this to be less.
 			currentDisplayIndex++; //Move one further up.
 		} else {
 			Debug.Log ("End of puzzle display");
@@ -119,6 +124,7 @@ public void resetGame() {
 
 public void puzzleFailure() { //Do this when the player gets it wrong
 	Debug.Log("You've Failed, Resetting puzzle");
+	failAudioHolder.GetComponent<GvrAudioSource> ().Play ();
 
 	currentSolveIndex = 0;
 
